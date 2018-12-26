@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TO-DOder</string>
+    <string name="action_splash">Не показывать заставку</string>
+</resources>
