@@ -1,4 +1,4 @@
-package com.achekulov.to_doder;
+package com.achekulov.to_doder.Fragment;
 
 
 import android.os.AsyncTask;
@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.achekulov.to_doder.R;
+
 import java.sql.Time;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
-public class SplashFragment extends Fragment {
+public class  SplashFragment extends Fragment {
 
     public SplashFragment() {
         // Required empty public constructor
@@ -42,6 +44,7 @@ public class SplashFragment extends Fragment {
             }
 
             Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+
             return null;
         }
     }
