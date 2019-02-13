@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.achekulov.to_doder.Adapter.TabAdapter;
 
+import com.achekulov.to_doder.Fragment.CurrentTaskFragment;
+import com.achekulov.to_doder.Fragment.DoneTaskFragment;
 import com.achekulov.to_doder.Fragment.SplashFragment;
 import com.achekulov.to_doder.Model.ModelTask;
 
@@ -28,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     TabLayout tabLayout;
     ViewPager viewPager;
     TabAdapter tabAdapter;
-    //CurrentTaskFragment currentTaskFragment;
-    //DoneTaskFragment doneTaskFragment;
+    CurrentTaskFragment currentTaskFragment;
+    DoneTaskFragment doneTaskFragment;
 
 
 
@@ -115,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         });
 
 
-        //currentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
-        //doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSOTION);
+        currentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
+        doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSOTION);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     @Override
     public void onTaskAdded(ModelTask newTask) {
         Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
-        //currentTaskFragment.addTask(newTask);
+        currentTaskFragment.addTask(newTask);
     }
     @Override
     public void onTaskAddingCancel() {
