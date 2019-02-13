@@ -6,11 +6,14 @@
     tools:context=".Fragment.CurrentTaskFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Current"
-        android:textSize="36sp"
-        android:layout_gravity="center"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCurrentTasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:clipToPadding="false"
+        android:paddingBottom="88dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

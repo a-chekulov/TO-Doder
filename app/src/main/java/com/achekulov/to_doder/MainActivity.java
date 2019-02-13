@@ -1,20 +1,25 @@
 package com.achekulov.to_doder;
 
-import android.os.Bundle;
 
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
 
 import com.achekulov.to_doder.Adapter.TabAdapter;
+
 import com.achekulov.to_doder.Fragment.SplashFragment;
+import com.achekulov.to_doder.Model.ModelTask;
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener {
     private static final int numberTabs = 2;
 
     FragmentManager fragmentManager;
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     TabAdapter tabAdapter;
+    //CurrentTaskFragment currentTaskFragment;
+    //DoneTaskFragment doneTaskFragment;
 
 
 
@@ -75,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setUI(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
@@ -106,5 +113,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //currentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
+        //doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSOTION);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment addingTaskDialogFragment = new AddingTaskDialogFragment();
+                addingTaskDialogFragment.show(fragmentManager, "AddingTaskDialogFragment");
+            }
+        });
     }
+
+    @Override
+    public void onTaskAdded(ModelTask newTask) {
+        Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
+        //currentTaskFragment.addTask(newTask);
+    }
+    @Override
+    public void onTaskAddingCancel() {
+        Toast.makeText(this, "Task adding cancel", Toast.LENGTH_LONG).show();
+    }
+
+
 }
