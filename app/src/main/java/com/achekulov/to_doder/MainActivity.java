@@ -14,10 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.achekulov.to_doder.Adapter.CurrentTaskAdapter;
 import com.achekulov.to_doder.Adapter.TabAdapter;
 
+import com.achekulov.to_doder.Fragment.CurrentTaskFragment;
+import com.achekulov.to_doder.Fragment.DoneTaskFragment;
 import com.achekulov.to_doder.Fragment.SplashFragment;
+import com.achekulov.to_doder.Model.Item;
 import com.achekulov.to_doder.Model.ModelTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener {
     private static final int numberTabs = 2;
@@ -28,10 +35,8 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     TabLayout tabLayout;
     ViewPager viewPager;
     TabAdapter tabAdapter;
-    //CurrentTaskFragment currentTaskFragment;
-    //DoneTaskFragment doneTaskFragment;
-
-
+    CurrentTaskFragment currentTaskFragment;
+    DoneTaskFragment doneTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,10 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
-
         fragmentManager = getSupportFragmentManager();
+
+        currentTaskFragment = new CurrentTaskFragment();
+
         runSplash();
         setUI();
     }
@@ -115,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         });
 
 
-        //currentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
-        //doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSOTION);
+        currentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
+        doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSOTION);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -130,8 +137,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
 
     @Override
     public void onTaskAdded(ModelTask newTask) {
-        Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
-        //currentTaskFragment.addTask(newTask);
+        currentTaskFragment.addTask(newTask);
     }
     @Override
     public void onTaskAddingCancel() {
