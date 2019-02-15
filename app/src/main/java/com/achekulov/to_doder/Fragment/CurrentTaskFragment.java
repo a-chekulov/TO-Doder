@@ -10,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.achekulov.to_doder.Adapter.CurrentTaskAdapter;
+import com.achekulov.to_doder.Model.Item;
 import com.achekulov.to_doder.Model.ModelTask;
 import com.achekulov.to_doder.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,9 +23,9 @@ import com.achekulov.to_doder.R;
  */
 public class CurrentTaskFragment extends Fragment {
 
-    private RecyclerView rvCurrentTasks;
-    private RecyclerView.LayoutManager layoutManager;
-    private CurrentTaskAdapter currentTaskAdapter;
+    private RecyclerView currentRecyclerView;
+    private RecyclerView.Adapter adapterTA;
+    private List<Item> items;
 
     public CurrentTaskFragment() {
         // Required empty public constructor
@@ -33,21 +37,20 @@ public class CurrentTaskFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_current_task, container, false);
 
-        rvCurrentTasks = rootView.findViewById(R.id.rvDoneTasks);
-        layoutManager = new LinearLayoutManager(getActivity());
-        rvCurrentTasks.setLayoutManager(layoutManager);
+        items = new ArrayList<>();
 
-        currentTaskAdapter = new CurrentTaskAdapter();
-        rvCurrentTasks.setAdapter(currentTaskAdapter);
+        currentRecyclerView = rootView.findViewById(R.id.rvCurrentTasks);
+        currentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapterTA = new CurrentTaskAdapter(getContext());
 
-
+        currentRecyclerView.setAdapter(adapterTA);
         return rootView;
     }
 
     public void addTask(ModelTask newTask){
         int position = -1;
-        for (int i = 0; i  < currentTaskAdapter.getItemCount(); i++){
-            ModelTask task = (ModelTask) currentTaskAdapter.getItem(i);
+        for (int i = 0; i  < adapterTA.getItemCount(); i++){
+            ModelTask task = (ModelTask) ((CurrentTaskAdapter)adapterTA).getItem(i);
             if (newTask.getDate() < task.getDate()){
                 position = i;
                 break;
@@ -55,10 +58,9 @@ public class CurrentTaskFragment extends Fragment {
         }
 
         if (position != -1){
-            currentTaskAdapter.addItem(position, newTask);
+            ((CurrentTaskAdapter) adapterTA).addItem(position, newTask);
         } else {
-            currentTaskAdapter.addItem(newTask);
+            ((CurrentTaskAdapter) adapterTA).addItem(newTask);
         }
     }
-
 }

@@ -19,8 +19,6 @@ import com.achekulov.to_doder.R;
 public class DoneTaskFragment extends Fragment {
 
 
-    private RecyclerView rvDoneTasks;
-
 
     public DoneTaskFragment() {
         // Required empty public constructor
@@ -31,9 +29,6 @@ public class DoneTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_done_task, container, false);
-        rvDoneTasks = rvDoneTasks.findViewById(R.id.rvDoneTasks);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        rvDoneTasks.setLayoutManager(layoutManager);
 
         return rootView;
 

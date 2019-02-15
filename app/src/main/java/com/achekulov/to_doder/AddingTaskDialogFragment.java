@@ -78,8 +78,8 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
         builder.setView(container);
 
         final ModelTask task = new ModelTask();
-        final Calendar mCalendar = Calendar.getInstance();
-        mCalendar.set(Calendar.HOUR_OF_DAY, mCalendar.get(Calendar.HOUR_OF_DAY) + 1);
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
 
 
         assert etDate != null;
@@ -87,9 +87,8 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
             @Override
             public void onClick(View v) {
                 if (etDate.length() == 0) {
-                    etDate.setText(" ");
+                    etDate.setText("");
                 }
-                calendar = Calendar.getInstance();
                 year = calendar.get(Calendar.YEAR);
                 month = calendar.get(Calendar.MONTH);
                 dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -99,36 +98,13 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                mCalendar.set(Calendar.YEAR, year);
-                                mCalendar.set(Calendar.MONTH, month);
-                                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                                etDate.setText(Utils.getDate(mCalendar.getTimeInMillis()));
-                                //etDate.setText(dayOfMonth + "." + (month+1) + "." + year);
+                                calendar.set(Calendar.YEAR, year);
+                                calendar.set(Calendar.MONTH, month);
+                                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                etDate.setText(Utils.getDate(calendar.getTimeInMillis()));
                             }
                         }, year, month, dayOfMonth);
                 datePickerDialog.show();
-                // datePickerFragment = new DatePickerFragment();
-                //Calendar dateCalendar = Calendar.getInstance();
-                // dateCalendar.set(year, monthOfYear, dayOfMonth);
-                //etDate.setText(Utils.getDate(dateCalendar.getTimeInMillis()));
-                //datePickerFragment.show(getFragmentManager(), "DatePickerFragment");
-
-                /*
-                DialogFragment datePickerFragment = new DatePickerFragment(){
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar dateCalendar = Calendar.getInstance();
-                        dateCalendar.set(year, monthOfYear, dayOfMonth);
-                        etDate.setText(Utils.getDate(dateCalendar.getTimeInMillis()));
-                    }
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        etDate.setText(null);
-                    }
-                };
-                assert getFragmentManager() != null;
-                datePickerFragment.show(getFragmentManager(), "DatePickerFragment");
-                */
             }
         });
 
@@ -141,7 +117,6 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
                 if (edTime.length() == 0){
                     edTime.setText(" ");
                 }
-                calendar = Calendar.getInstance();
                 hour = calendar.get(Calendar.HOUR_OF_DAY);
                 minute = calendar.get(Calendar.MINUTE);
 
@@ -150,32 +125,14 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                mCalendar.set(Calendar.MINUTE, minute);
-                                mCalendar.set(Calendar.SECOND, 0);
-                                edTime.setText(Utils.getTime(mCalendar.getTimeInMillis()));
+                                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                calendar.set(Calendar.MINUTE, minute);
+                                calendar.set(Calendar.SECOND, 0);
+                                edTime.setText(Utils.getTime(calendar.getTimeInMillis()));
                                 //edTime.setText(hourOfDay + ":" + minute);
                             }
                         }, dayOfMonth, minute, true);
                 timePickerDialog.show();
-
-                /*
-                DialogFragment timePickerFragment = new TimePickerFragmant(){
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar timeCalendar = Calendar.getInstance();
-                        timeCalendar.set(0,0,0, hourOfDay, minute);
-                        edTime.setText(Utils.getTime(timeCalendar.getTimeInMillis()));
-                    }
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        edTime.setText(null);
-                    }
-                };
-                assert getFragmentManager() != null;
-                timePickerFragment.show(getFragmentManager(), "TimePickerFragment");
-                */
             }
         });
 
@@ -183,11 +140,7 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 task.setTitle(etTitle.getText().toString());
-                if (etDate.length() != 0 || edTime.length() != 0 ){
-                    task.setDate(mCalendar.getTimeInMillis());
-                }
-
-
+                task.setDate(calendar.getTimeInMillis());
                 addingTaskListener.onTaskAdded(task);
                 dialog.dismiss();
             }
@@ -229,7 +182,6 @@ public class AddingTaskDialogFragment extends android.support.v4.app.DialogFragm
                     }
                     @Override
                     public void afterTextChanged(Editable s) {
-
                     }
                 });
             }

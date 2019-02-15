@@ -33,8 +33,8 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
 
         switch (i) {
-            case 0: return currentTaskFragment;
-            case 1: return doneTaskFragment;
+            case CURRENT_TASK_FRAGMENT_POSITION: return currentTaskFragment;
+            case DONE_TASK_FRAGMENT_POSOTION: return doneTaskFragment;
             default: return null;
         }
     }
