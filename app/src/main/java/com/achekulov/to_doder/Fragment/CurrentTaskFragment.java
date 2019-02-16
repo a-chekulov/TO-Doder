@@ -23,9 +23,9 @@ import java.util.List;
  */
 public class CurrentTaskFragment extends Fragment {
 
-    private RecyclerView currentRecyclerView;
-    private RecyclerView.Adapter adapterTA;
-    private List<Item> items;
+    protected RecyclerView cRecyclerView;
+    protected RecyclerView.Adapter cAdapter;
+    protected List<Item> cItems;
 
     public CurrentTaskFragment() {
         // Required empty public constructor
@@ -37,20 +37,20 @@ public class CurrentTaskFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_current_task, container, false);
 
-        items = new ArrayList<>();
+        cItems = new ArrayList<>();
 
-        currentRecyclerView = rootView.findViewById(R.id.rvCurrentTasks);
-        currentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterTA = new CurrentTaskAdapter(getContext());
+        cRecyclerView = rootView.findViewById(R.id.rvCurrentTasks);
+        cRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        cAdapter = new CurrentTaskAdapter(getContext());
 
-        currentRecyclerView.setAdapter(adapterTA);
+        cRecyclerView.setAdapter(cAdapter);
         return rootView;
     }
 
     public void addTask(ModelTask newTask){
         int position = -1;
-        for (int i = 0; i  < adapterTA.getItemCount(); i++){
-            ModelTask task = (ModelTask) ((CurrentTaskAdapter)adapterTA).getItem(i);
+        for (int i = 0; i  < cAdapter.getItemCount(); i++){
+            ModelTask task = (ModelTask) ((CurrentTaskAdapter)cAdapter).getItem(i);
             if (newTask.getDate() < task.getDate()){
                 position = i;
                 break;
@@ -58,9 +58,18 @@ public class CurrentTaskFragment extends Fragment {
         }
 
         if (position != -1){
-            ((CurrentTaskAdapter) adapterTA).addItem(position, newTask);
+            ((CurrentTaskAdapter) cAdapter).addItem(position, newTask);
         } else {
-            ((CurrentTaskAdapter) adapterTA).addItem(newTask);
+            ((CurrentTaskAdapter) cAdapter).addItem(newTask);
         }
     }
+
+    public void removeTask(int position){
+        ((CurrentTaskAdapter)cAdapter).removeItem(position);
+    }
+
+    public ModelTask getTask(int position){
+        return (ModelTask)((CurrentTaskAdapter)cAdapter).getItem(position);
+    }
+
 }
