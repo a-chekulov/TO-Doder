@@ -1,10 +1,10 @@
 package com.achekulov.to_doder.Adapter;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,23 +37,17 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
         notifyItemInserted(position);
     }
 
+    public void removeItem(int position){
+        if (position >= 0 || position <= getItemCount() -1);
+        items.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public CurrentTaskAdapter(Context context) {
         items = new ArrayList<>();
         this.context = context;
     }
 
-    public class TaskViewHolder extends RecyclerView.ViewHolder{
-        CardView cv;
-        TextView title;
-        TextView date;
-
-        public TaskViewHolder(@NonNull View itemView) {
-            super(itemView);
-            cv = itemView.findViewById(R.id.cv);
-            title = itemView.findViewById(R.id.tv_task_title);
-            date = itemView.findViewById(R.id.tv_task_date);
-        }
-    }
     @NonNull
     @Override
     public CurrentTaskAdapter.TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -74,5 +68,25 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
+        CardView cv;
+        TextView title;
+        TextView date;
+
+        public TaskViewHolder(@NonNull View itemView) {
+            super(itemView);
+            cv = itemView.findViewById(R.id.cv);
+            cv.setOnCreateContextMenuListener(this);
+            title = itemView.findViewById(R.id.tv_task_title);
+            date = itemView.findViewById(R.id.tv_task_date);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(this.getAdapterPosition(), 100, 1, "Delete");
+            menu.add(this.getAdapterPosition(), 101, 0, "Complete the Task");
+        }
     }
 }

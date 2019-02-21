@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         }
     }
 
-    public void setUI(){
+    public void setUI() {
         toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -111,10 +112,12 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -139,10 +142,29 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     public void onTaskAdded(ModelTask newTask) {
         currentTaskFragment.addTask(newTask);
     }
+
     @Override
     public void onTaskAddingCancel() {
         Toast.makeText(this, "Task adding cancel", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 100:
+                currentTaskFragment.removeTask(item.getGroupId());
+                break;
+            case 101:
+                doneTaskFragment.addTask(currentTaskFragment.getTask(item.getGroupId()));
+                currentTaskFragment.removeTask(item.getGroupId());
+                break;
+            default:
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 
+    public void moveTask(){
+
+    }
 }

@@ -3,16 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.DoneTaskFragment">
+    tools:context=".Fragment.CurrentTaskFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvDoneTasks"
+        android:id="@+id/rvCurrentTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:clipToPadding="false"
-        android:paddingBottom="88dp">
+        android:clipToPadding="false">
 
     </android.support.v7.widget.RecyclerView>
 
